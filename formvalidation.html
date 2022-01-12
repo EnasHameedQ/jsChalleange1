@@ -38,8 +38,8 @@
                 return false;
             }
 
-            if (phone.length != 7) {
-                producePrompt('only 7 numbers', 'phone-error', 'red');
+            if (phone.length != 9) {
+                producePrompt('only 9 numbers', 'phone-error', 'red');
                 return false;
             }
 
@@ -79,7 +79,7 @@
 
         function validateMessage() {
             var message = document.getElementById('contact-message').value;
-            var required = 30;
+            var required = 20;
             var left = required - message.length;
 
             if (left > 0) {
@@ -92,8 +92,45 @@
 
         }
 
+
+        function validateAge() {
+            var age = document.getElementById('contact-age').value;
+
+            if (age.match == 0) {
+
+                producePrompt('Age Invalid', 'age-error', 'red');
+                return false;
+
+            }
+
+            function getAge(dateString) {
+                var dob = age;
+                var year = Number(dob.substr(0, 4));
+                var month = Number(dob.substr(4, 2)) - 1;
+                var day = Number(dob.substr(6, 2));
+                var today = new Date();
+                var age = today.getFullYear() - year;
+                if (today.getMonth() < month || (today.getMonth() == month && today.getDate() < day)) {
+                    age--;
+
+                    return age;
+                }
+            }
+            if (!dateString < 18) {
+
+                producePrompt('Your age down 18 ', 'age-error', 'red');
+                return false;
+
+            }
+
+            producePrompt('Valid', 'age-error', 'green');
+            return true;
+
+        }
+
+
         function validateForm() {
-            if (!validateName() || !validatePhone() || !validateEmail() || !validateMessage()) {
+            if (!validateName() || !validateAge() || !validatePhone() || !validateEmail() || !validateMessage()) {
                 jsShow('submit-error');
                 producePrompt('Please fix errors to submit.', 'submit-error', 'red');
                 setTimeout(function() {
@@ -131,27 +168,31 @@
             <input type="text" class="form-control" id="contact-name" name="name" placeholder="Enter your name.." onkeyup='validateName()'>
             <span class='error-message' id='name-error'></span>
         </div>
-
         <div class="form-group">
-            <label for="contact-phone">Phone Number</label>
-            <input type="tel" class="form-control" id="contact-phone" name="phone" placeholder="Ex: 77345778" value='777' onkeyup='validatePhone()'>
-            <span class='error-message' id='phone-error'></span>
+            <label for="contact-age">Age</label>
+            <input type="datetime-local" lass=" form-control " id="contact-age " name="age " placeholder="Enter your age.. " onkeyup='validateAge()'>
+            <span class='error-message' id='age-error'></span>
+        </div>
+        <div class="form-group ">
+            <label for="contact-phone ">Phone Number</label>
+            <input type="tel " class="form-control " id="contact-phone " name="phone " placeholder="Ex: 77345778 " value=777 onkeyup=' validatePhone() '>
+            <span class='error-message ' id='phone-error '></span>
         </div>
 
         <div class=" form-group ">
             <label for="contact-email ">Email address</label>
-            <input type="texst " class="form-control " id="contact-email " name="email " placeholder="Enter Email " onkeyup='validateEmail()'>
-            <span class='error-message' id='email-error'></span>
+            <input type="text " class="form-control " id="contact-email " name="email " placeholder="Enter Email " onkeyup='validateEmail() '>
+            <span class='error-message ' id='email-error '></span>
         </div>
 
         <div class="form-group ">
-            <label for='contactMessage'>Your Message</label>
-            <textarea class="form-control " rows="5 " id='contact-message' name='message' placeholder="Enter a brief message " onkeyup='validateMessage()'></textarea>
-            <span class='error-message' id='message-error'></span>
+            <label for='contactMessage '>Your Message</label>
+            <textarea class="form-control " rows="5 " id='contact-message ' name='message ' placeholder="Enter a brief message " onkeyup='validateMessage() '></textarea>
+            <span class='error-message ' id='message-error '></span>
         </div>
 
-        <button onclick='return validateForm()' class="btn btn-default ">Submit</button>
-        <span class='error-message' id='submit-error'></span>
+        <button onclick='return validateForm() ' class="btn btn-default ">Submit</button>
+        <span class='error-message ' id='submit-error '></span>
     </form>
 </body>
 
